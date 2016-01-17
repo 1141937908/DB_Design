@@ -3,7 +3,8 @@ package com.view;
 import com.dao.DBRevisable;
 import com.dao.Daodbc;
 import com.dao.Revisable;
-import com.model.Teacher;
+import com.model.Lesson;
+import com.model.Users;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,13 +15,12 @@ import java.sql.SQLException;
 /**
  * Created by llc_1 on 2016/1/17.
  */
-public class AddTeacherInfo extends JFrame implements ActionListener{
-
-    public AddTeacherInfo(){
-        addTeacherInfoGUI();
+public class AddUsersInfo extends JFrame{
+    public AddUsersInfo(){
+        addUsersInfoGUI();
     }
 
-    private void addTeacherInfoGUI(){
+    private void addUsersInfoGUI(){
         /*常用组件实例化*/
         jPanel1 = new JPanel();
         jPanel2 = new JPanel();
@@ -30,7 +30,6 @@ public class AddTeacherInfo extends JFrame implements ActionListener{
         jPanel6 = new JPanel();
         jPanel7 = new JPanel();
         jPanel8 = new JPanel();
-        jComboBox = new JComboBox();
         jButton1 = new JButton("提交");
         jButton1.addActionListener(new ActionListener() {
             @Override
@@ -38,14 +37,12 @@ public class AddTeacherInfo extends JFrame implements ActionListener{
                 if(e.getSource()==jButton1){
                     Daodbc dbc = new Daodbc();
                     try{
-
                         dbc.getCon();
+                        Users users = new Users();
+                        users.setId(jTextField1.getText().toString());
+                        users.setPassword(passwordField.getPassword().toString());
                         Revisable revisable = new DBRevisable(dbc.getConnection());
-                        Teacher teacher = new Teacher();
-                        teacher.setTeaId(jTextField1.getText().toString());
-                        teacher.setTeaName(jTextField2.getText());
-                        teacher.setTeaSex(jComboBox.getSelectedItem().toString());
-                        revisable.addTeacherInfo(teacher);
+                        revisable.addUsersInfo(users);
                     }catch (SQLException e1){
                         e1.printStackTrace();
                     }catch (Exception e1){
@@ -69,12 +66,16 @@ public class AddTeacherInfo extends JFrame implements ActionListener{
         jTextField1 = new JTextField(20);
         jTextField2 = new JTextField(20);
         jTextField3 = new JTextField(20);
-        jLabel1 = new JLabel("教师号");
-        jLabel2 = new JLabel("姓   名");
-        jLabel3 = new JLabel("性   别");
-        jComboBox.addItem("男");
-        jComboBox.addItem("女");
-
+        jTextField3 = new JTextField(20);
+        jTextField4 = new JTextField(20);
+        jTextField5 = new JTextField(20);
+        passwordField = new JPasswordField(20);
+        jLabel1 = new JLabel("账号");
+        jLabel2 = new JLabel("密码");
+//        jLabel3 = new JLabel("出  版  社");
+//        jLabel4 = new JLabel("作       者");
+//        jLabel5 = new JLabel("价       格");
+//        JLabel6 = new JLabel("库 存 量");
 
 //        jPanel1.setLayout(new GridLayout(1,2));
 //        jPanel2.setLayout(new GridLayout(1,2));
@@ -83,20 +84,27 @@ public class AddTeacherInfo extends JFrame implements ActionListener{
         jPanel1.add(jLabel1);
         jPanel1.add(jTextField1);
         jPanel2.add(jLabel2);
-        jPanel2.add(jTextField2);
-        jPanel3.add(jLabel3);
-        jPanel3.add(jComboBox);
-        jPanel4.add(jButton1);
-        jPanel4.add(jButton2);
-
-        this.add(jPanel5);
+        jPanel2.add(passwordField);
+//        jPanel3.add(jLabel3);
+//        jPanel3.add(jTextField3);
+//        jPanel4.add(jLabel4);
+//        jPanel4.add(jTextField4);
+//        jPanel5.add(jLabel5);
+//        jPanel5.add(jTextField5);
+//        jPanel6.add(jButton1);
+//        jPanel6.add(jButton2);
+        jPanel3.add(jButton1);
+        jPanel3.add(jButton2);
+        this.add(jPanel4);
         this.add(jPanel1);
         this.add(jPanel2);
         this.add(jPanel3);
-        this.add(jPanel4);
+//        this.add(jPanel4);
+//        this.add(jPanel5);
+//        this.add(jPanel6);
 
         /*窗体基本设置*/
-        this.setLayout(new GridLayout(5,1));
+        this.setLayout(new GridLayout(4,1));
         this.setTitle("");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
@@ -106,7 +114,7 @@ public class AddTeacherInfo extends JFrame implements ActionListener{
     }
 
     public static void main(String[] args){
-        AddTeacherInfo addTeacherInfo = new AddTeacherInfo();
+        AddUsersInfo addUsersInfo = new AddUsersInfo();
     }
 
     private JPanel jPanel1;
@@ -122,13 +130,15 @@ public class AddTeacherInfo extends JFrame implements ActionListener{
     private JLabel jLabel1;
     private JLabel jLabel2;
     private JLabel jLabel3;
+    private JLabel jLabel4;
+    private JLabel jLabel5;
+    private JLabel jLabel6;
     private JTextField jTextField1;
     private JTextField jTextField2;
     private JTextField jTextField3;
-    private JComboBox jComboBox;
+    private JTextField jTextField4;
+    private JTextField jTextField5;
+    private JTextField jTextField6;
+    private JPasswordField passwordField;
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-    }
 }

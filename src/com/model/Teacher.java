@@ -32,15 +32,15 @@ public class Teacher {
         return teaSex;
     }
 
-    public void setTeaId(){
+    public void setTeaId(String s){
         this.teaId = teaId;
     }
 
-    public void setTeaName(){
+    public void setTeaName(String text){
         this.teaName = teaName;
     }
 
-    public void setTeaSex(){
+    public void setTeaSex(String s){
         this.teaSex = teaSex;
     }
 
