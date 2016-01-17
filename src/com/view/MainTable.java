@@ -179,7 +179,6 @@ public class MainTable extends JFrame{
         try {
             dbc.getCon();
             rowData1=dbr.searchClassesInfo("*");
-            jTable1.add(rowData1,columnNames1);
         }catch (Exception e){
             e.printStackTrace();
         }
