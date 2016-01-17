@@ -1,22 +1,25 @@
 package com.view;
 
-import com.dao.DBRevisable;
-import com.dao.Daodbc;
-import com.dao.Revisable;
 import com.model.Book;
-import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 
 /**
- * Created by llc_1 on 2016/1/17.
+ * Created by llc_1 on 2016/1/18.
  */
-public class AddBookInfo extends JDialog implements ActionListener{
+public class ModifyBookInfo extends JDialog implements ActionListener{
 
+    /**
+     * 常用组件定义
+     * @param owner
+     * @param title
+     * @param modal
+     * @param book
+     * @param rowNums
+     */
     private JPanel jPanel1;
     private JPanel jPanel2;
     private JPanel jPanel3;
@@ -39,13 +42,19 @@ public class AddBookInfo extends JDialog implements ActionListener{
     private JTextField jTextField5;
     private JTextField jTextField6;
 
-    public AddBookInfo(Frame owner , String title , boolean modal,Book book,int rowNums){
-
-        super(owner,title,modal);   //调用父类构造方法
-        addBookInfoGUI();
+    public ModifyBookInfo(Frame owner, String title, boolean modal, Book book, int rowNums){
+        super(owner,title,modal);
+        ModifyBookInfoGUI();
+        jTextField1.setText((String)book.getValueAt(rowNums,0));
+        jTextField1.setEditable(false);
+        jTextField2.setText((String)book.getValueAt(rowNums,1));
+        jTextField3.setText((String)book.getValueAt(rowNums,2));
+        jTextField4.setText((String)book.getValueAt(rowNums,3));
+        jTextField5.setText((String)book.getValueAt(rowNums,4));
+        jTextField6.setText((String)book.getValueAt(rowNums,5));
     }
 
-    private void addBookInfoGUI(){
+    private void ModifyBookInfoGUI(){
         /*常用组件实例化*/
         jPanel1 = new JPanel();
         jPanel2 = new JPanel();
@@ -55,11 +64,10 @@ public class AddBookInfo extends JDialog implements ActionListener{
         jPanel6 = new JPanel();
         jPanel7 = new JPanel();
 
-        jButton1 = new JButton("提交");
+        jButton1 = new JButton("修改");
         jButton1.addActionListener(this);   //监听1
         jButton2 = new JButton("取消");
         jButton2.addActionListener(this);   //监听2
-
         jTextField1 = new JTextField(20);
         jTextField2 = new JTextField(20);
         jTextField3 = new JTextField(20);
@@ -107,23 +115,18 @@ public class AddBookInfo extends JDialog implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        /*如果监听到“提交”按钮*/
-        if (e.getSource()==jButton1){
+        /*如果监听到了jButton1按钮*/
+        if(e.getSource()==jButton1){
+            String sql = "USE DB_Design;UPDATE Book SET Bname=?,Bpublish=?,Bwriter=?,Bprice=?,Bnum=? WHERE Bno=?";
+            String[] paras={jTextField2.getText(),jTextField3.getText(),jTextField4.getText(),jTextField5.getText(),jTextField6.getText(),jTextField1.getText()};
             Book book = new Book();
-            String sql = "USE DB_Design;INSERT INTO Book VALUES(?,?,?,?,?,?)";
-            String paras[]={jTextField1.getText(),jTextField2.getText(),jTextField3.getText(),jTextField4.getText(),jTextField5.getText(),jTextField6.getText()};
             try {
-                if (!book.addBook(sql,paras)){
-                    JOptionPane.showConfirmDialog(this, "添加失败！");
-                    return;
-                }
+                book.addBook(sql,paras);
             } catch (Exception e1) {
                 e1.printStackTrace();
             }
-            //关闭对话框
             this.dispose();
         }
-        /*如果监听到“取消”按钮*/
         else if (e.getSource()==jButton2){
             try{
                 this.dispose();

@@ -1,7 +1,9 @@
 package com.view;
 
 import com.dao.Daodbc;
-import com.model.*;
+import com.model.Classes;
+import com.model.Order;
+import com.model.Users;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,9 +15,9 @@ import java.sql.ResultSet;
 import java.util.Vector;
 
 /**
- * Created by llc_1 on 2016/1/17.
+ * Created by llc_1 on 2016/1/18.
  */
-public class AddOrderInfo extends JDialog implements ActionListener{
+public class ModifyOrderInfo extends JDialog implements ActionListener{
     /**
      * 常用组件定义
      */
@@ -42,9 +44,18 @@ public class AddOrderInfo extends JDialog implements ActionListener{
     private JComboBox jComboBox3;
     private JComboBox jComboBox4;
 
-    public AddOrderInfo(Frame owner, String title , boolean modal, Users users,int rowNums){
+    public ModifyOrderInfo(Frame owner, String title , boolean modal, Order order, int rowNums){
         super(owner,title,modal);
         addOrderInfoGUI();
+        jTextField1.setText((String)order.getValueAt(rowNums,0));
+        jTextField1.setEditable(false);
+        jTextField2.setText((String)order.getValueAt(rowNums,1));
+        jTextField2.setEditable(false);
+        jTextField3.setText((String)order.getValueAt(rowNums,2));
+        jTextField3.setEditable(false);
+        jTextField4.setText((String)order.getValueAt(rowNums,3));
+        jTextField4.setEditable(false);
+        jTextField5.setText((String)order.getValueAt(rowNums,4));
     }
 
     private void addOrderInfoGUI(){
@@ -80,15 +91,15 @@ public class AddOrderInfo extends JDialog implements ActionListener{
         ResultSet resultSet;
         Connection connection = dbc.getConnection();
 
-            String sql1 = "SELECT Cno FROM Classes";
-            String sql2 = "SELECT Tno FROM Teacher";
-            String sql3 = "SELECT Lno FROM Lesson";
-            String sql4 = "SELECT Bno FROM Book";
+        String sql1 = "SELECT Cno FROM Classes";
+        String sql2 = "SELECT Tno FROM Teacher";
+        String sql3 = "SELECT Lno FROM Lesson";
+        String sql4 = "SELECT Bno FROM Book";
 
-            Vector vector1 = new Vector();
-            Vector vector2 = new Vector();
-            Vector vector3 = new Vector();
-            Vector vector4 = new Vector();
+        Vector vector1 = new Vector();
+        Vector vector2 = new Vector();
+        Vector vector3 = new Vector();
+        Vector vector4 = new Vector();
 
         try{
             preparedStatement = connection.prepareStatement(sql1);
@@ -119,12 +130,12 @@ public class AddOrderInfo extends JDialog implements ActionListener{
             jComboBox2 = new JComboBox(vector2);
             jComboBox3 = new JComboBox(vector3);
             jComboBox4 = new JComboBox(vector4);
-           // jComboBox1.setSize();
+            // jComboBox1.setSize();
         } catch (Exception e) {
             e.printStackTrace();
         }finally {
-        dbc.close();
-    }
+            dbc.close();
+        }
 
         jPanel1.add(jLabel1);
         jPanel1.add(jComboBox1);
@@ -157,31 +168,26 @@ public class AddOrderInfo extends JDialog implements ActionListener{
         this.setVisible(true);
     }
 
-public void actionPerformed(ActionEvent e) {
-        /*如果监听到“提交”按钮*/
-    if (e.getSource()==jButton1){
-        Order order = new Order();
-        String sql = "USE DB_Design;INSERT INTO Order VALUES(?,?,?,?,?)";
-        String paras[]={jTextField1.getText(),jTextField2.getText(),jTextField3.getText(),jTextField4.getText(),jTextField5.getText()};
-        try {
-            if (!order.addOrder(sql,paras)){
-                JOptionPane.showConfirmDialog(this,"添加失败！");
-                return;
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        /*如果监听到了jButton1按钮*/
+        if(e.getSource()==jButton1){
+            String sql = "USE DB_Design;UPDATE Order SET Onum=? WHERE Cno=? AND Tno=? AND Lno=? AND Bno=?";
+            String[] paras={jTextField1.getText(),jComboBox1.getSelectedItem().toString(),jComboBox2.getSelectedItem().toString(),jComboBox3.getSelectedItem().toString(),jComboBox4.getSelectedItem().toString()};
+            Order order = new Order();
+            try {
+                order.addOrder(sql,paras);
+            } catch (Exception e1) {
+                e1.printStackTrace();
             }
-        } catch (Exception e1) {
-            e1.printStackTrace();
-        }
-        //关闭对话框
-        this.dispose();
-    }
-        /*如果监听到“取消”按钮*/
-    else if (e.getSource()==jButton2){
-        try{
             this.dispose();
-        }catch (Exception e1){
-            e1.printStackTrace();
+        }
+        else if (e.getSource()==jButton2){
+            try{
+                this.dispose();
+            }catch (Exception e1){
+                e1.printStackTrace();
+            }
         }
     }
-}
-
 }

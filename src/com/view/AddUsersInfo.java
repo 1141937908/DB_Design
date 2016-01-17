@@ -1,22 +1,36 @@
 package com.view;
 
-import com.dao.DBRevisable;
-import com.dao.Daodbc;
-import com.dao.Revisable;
-import com.model.Lesson;
+
+import com.model.Book;
 import com.model.Users;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 
 /**
  * Created by llc_1 on 2016/1/17.
  */
-public class AddUsersInfo extends JFrame{
-    public AddUsersInfo(){
+public class AddUsersInfo extends JDialog implements ActionListener{
+    /**
+     * 常用组件定义
+     */
+    private JPanel jPanel1;
+    private JPanel jPanel2;
+    private JPanel jPanel3;
+    private JPanel jPanel4;
+    private JButton jButton1;
+    private JButton jButton2;
+    private JLabel jLabel1;
+    private JLabel jLabel2;
+    private JLabel jLabel3;
+    private JTextField jTextField1;
+    private JTextField jTextField2;
+    private JPasswordField jPasswordField;
+
+    public AddUsersInfo(Frame owner, String title, boolean modal, Users users,int rowNums){
+        super(owner,title,modal);
         addUsersInfoGUI();
     }
 
@@ -26,86 +40,35 @@ public class AddUsersInfo extends JFrame{
         jPanel2 = new JPanel();
         jPanel3 = new JPanel();
         jPanel4 = new JPanel();
-        jPanel5 = new JPanel();
-        jPanel6 = new JPanel();
-        jPanel7 = new JPanel();
-        jPanel8 = new JPanel();
+        /*监听按钮*/
         jButton1 = new JButton("提交");
-        jButton1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(e.getSource()==jButton1){
-                    Daodbc dbc = new Daodbc();
-                    try{
-                        dbc.getCon();
-                        Users users = new Users();
-                        users.setId(jTextField1.getText().toString());
-                        users.setPassword(passwordField.getPassword().toString());
-                        Revisable revisable = new DBRevisable(dbc.getConnection());
-                        revisable.addUsersInfo(users);
-                    }catch (SQLException e1){
-                        e1.printStackTrace();
-                    }catch (Exception e1){
-                        e1.printStackTrace();
-                    }finally {
-                        dbc.getClose(dbc.getConnection(),null,null);
-                        System.exit(0);
-                    }
-                }
-            }
-        });
+        jButton1.addActionListener(this);   //监听1
         jButton2 = new JButton("退出");
-        jButton2.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(e.getSource()==jButton2){
-                    System.exit(0);
-                }
-            }
-        });
-        jTextField1 = new JTextField(20);
-        jTextField2 = new JTextField(20);
-        jTextField3 = new JTextField(20);
-        jTextField3 = new JTextField(20);
-        jTextField4 = new JTextField(20);
-        jTextField5 = new JTextField(20);
-        passwordField = new JPasswordField(20);
-        jLabel1 = new JLabel("账号");
-        jLabel2 = new JLabel("密码");
-//        jLabel3 = new JLabel("出  版  社");
-//        jLabel4 = new JLabel("作       者");
-//        jLabel5 = new JLabel("价       格");
-//        JLabel6 = new JLabel("库 存 量");
+        jButton2.addActionListener(this);   //监听2
 
-//        jPanel1.setLayout(new GridLayout(1,2));
-//        jPanel2.setLayout(new GridLayout(1,2));
-//        jPanel3.setLayout(new GridLayout(1,2));
-//        jPanel4.setLayout(new GridLayout(1,2));
+        jLabel1 = new JLabel("账号");
+        jTextField1 = new JTextField(20);
+        jLabel2 = new JLabel("密码");
+        jPasswordField = new JPasswordField(20);
+        jLabel3 = new JLabel("姓名");
+        jTextField2 = new JTextField(20);
+
         jPanel1.add(jLabel1);
         jPanel1.add(jTextField1);
         jPanel2.add(jLabel2);
-        jPanel2.add(passwordField);
-//        jPanel3.add(jLabel3);
-//        jPanel3.add(jTextField3);
-//        jPanel4.add(jLabel4);
-//        jPanel4.add(jTextField4);
-//        jPanel5.add(jLabel5);
-//        jPanel5.add(jTextField5);
-//        jPanel6.add(jButton1);
-//        jPanel6.add(jButton2);
-        jPanel3.add(jButton1);
-        jPanel3.add(jButton2);
-        this.add(jPanel4);
+        jPanel2.add(jPasswordField);
+        jPanel3.add(jLabel3);
+        jPanel3.add(jTextField2);
+        jPanel4.add(jButton1);
+        jPanel4.add(jButton2);
+
         this.add(jPanel1);
         this.add(jPanel2);
         this.add(jPanel3);
-//        this.add(jPanel4);
-//        this.add(jPanel5);
-//        this.add(jPanel6);
+        this.add(jPanel4);
 
         /*窗体基本设置*/
-        this.setLayout(new GridLayout(4,1));
-        this.setTitle("");
+        this.setLayout(new GridLayout(5,1));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setSize(300,200);
@@ -113,32 +76,31 @@ public class AddUsersInfo extends JFrame{
         this.setVisible(true);
     }
 
-    public static void main(String[] args){
-        AddUsersInfo addUsersInfo = new AddUsersInfo();
+    @Override
+    public void actionPerformed(ActionEvent e) {
+         /*如果监听到“提交”按钮*/
+        if (e.getSource()==jButton1){
+            Users users = new Users();
+            String sql = "USE DB_Design;INSERT INTO Users VALUES(?,?,?)";
+            String paras[]={jTextField1.getText(),jPasswordField.getPassword().toString(), jTextField2.getText()};
+            try {
+                if (!users.addUsers(sql,paras)){
+                    JOptionPane.showConfirmDialog(this, "添加失败！");
+                    return;
+                }
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+            //关闭对话框
+            this.dispose();
+        }
+        /*如果监听到“取消”按钮*/
+        else if (e.getSource()==jButton2){
+            try{
+                this.dispose();
+            }catch (Exception e1){
+                e1.printStackTrace();
+            }
+        }
     }
-
-    private JPanel jPanel1;
-    private JPanel jPanel2;
-    private JPanel jPanel3;
-    private JPanel jPanel4;
-    private JPanel jPanel5;
-    private JPanel jPanel6;
-    private JPanel jPanel7;
-    private JPanel jPanel8;
-    private JButton jButton1;
-    private JButton jButton2;
-    private JLabel jLabel1;
-    private JLabel jLabel2;
-    private JLabel jLabel3;
-    private JLabel jLabel4;
-    private JLabel jLabel5;
-    private JLabel jLabel6;
-    private JTextField jTextField1;
-    private JTextField jTextField2;
-    private JTextField jTextField3;
-    private JTextField jTextField4;
-    private JTextField jTextField5;
-    private JTextField jTextField6;
-    private JPasswordField passwordField;
-
 }

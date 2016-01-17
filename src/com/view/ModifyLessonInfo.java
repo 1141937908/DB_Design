@@ -1,24 +1,17 @@
 package com.view;
 
-import com.dao.DBRevisable;
-import com.dao.Daodbc;
-import com.dao.Revisable;
-import com.model.Book;
 import com.model.Classes;
 import com.model.Lesson;
-import com.model.Users;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 
 /**
- * Created by llc_1 on 2016/1/17.
+ * Created by llc_1 on 2016/1/18.
  */
-public class AddLessonInfo extends JDialog implements ActionListener{
-
+public class ModifyLessonInfo extends JDialog implements ActionListener{
     /**
      * 常用组件定义
      */
@@ -34,9 +27,12 @@ public class AddLessonInfo extends JDialog implements ActionListener{
     private JTextField jTextField1;
     private JTextField jTextField2;
 
-    public AddLessonInfo(Frame woner,String title,boolean modal,Lesson lesson,int rowNums){
+    public ModifyLessonInfo(Frame woner, String title, boolean modal, Lesson lesson, int rowNums){
         super(woner,title,modal);
         addLessonInfoGUI();
+        jTextField1.setText((String)lesson.getValueAt(rowNums,0));
+        jTextField1.setEditable(false);
+        jTextField2.setText((String)lesson.getValueAt(rowNums,1));
     }
 
     private void addLessonInfoGUI(){
@@ -46,7 +42,7 @@ public class AddLessonInfo extends JDialog implements ActionListener{
         jPanel3 = new JPanel();
         jPanel4 = new JPanel();
 
-        jButton1 = new JButton("提交");
+        jButton1 = new JButton("修改");
         jButton1.addActionListener(this);   //监听1
         jButton2 = new JButton("退出");
         jButton2.addActionListener(this);   //监听2
@@ -79,23 +75,18 @@ public class AddLessonInfo extends JDialog implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        /*如果监听到“提交”按钮*/
-        if (e.getSource()==jButton1){
+        /*如果监听到了jButton1按钮*/
+        if(e.getSource()==jButton1){
+            String sql = "USE DB_Design;UPDATE Lesson SET Lname=? WHERE Tno=?";
+            String[] paras={jTextField2.getText(),jTextField1.getText()};
             Lesson lesson = new Lesson();
-            String sql = "USE DB_Design;INSERT INTO Lesson VALUES(?,?)";
-            String paras[]={jTextField1.getText(),jTextField2.getText()};
             try {
-                if (lesson.addLesson(sql,paras)){
-                    JOptionPane.showConfirmDialog(this,"添加失败！");
-                    return;
-                }
+                lesson.addLesson(sql,paras);
             } catch (Exception e1) {
                 e1.printStackTrace();
             }
-            //关闭对话框
             this.dispose();
         }
-        /*如果监听到“取消”按钮*/
         else if (e.getSource()==jButton2){
             try{
                 this.dispose();

@@ -1,24 +1,29 @@
-package com.view;
+package com.service;
 
-/**
- * Created by llc_1 on 2016/1/15.
- */
-
-import com.dao.*;
+import com.dao.DBRevisable;
+import com.dao.Daodbc;
+import com.dao.Revisable;
 import com.model.Classes;
+import com.model.Users;
 
 import javax.swing.*;
-import javax.swing.event.AncestorEvent;
-import javax.swing.event.AncestorListener;
-import java.beans.VetoableChangeListener;
-import java.util.*;
-import java.sql.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.util.Vector;
 
-public class MainTable extends JFrame{
+/**
+ * Created by llc_1 on 2016/1/17.
+ */
+public class TeachingMetarielDBMS extends JFrame implements ActionListener{
 
+    /**
+     * 定义控件
+     */
+    /*框架控件*/
     private CardLayout cardLayout;
+
     private JPanel jPanel1;
     private JPanel jPanel2;
     private JPanel jPanel3;
@@ -38,8 +43,8 @@ public class MainTable extends JFrame{
 
     private JSplitPane jSplitPane;
 
-    private JList jList;
-
+//    private JList jList;
+    /*菜单控件*/
     private JButton jButton1;
     private JButton jButton2;
     private JButton jButton3;
@@ -54,17 +59,23 @@ public class MainTable extends JFrame{
     private JButton jButton12;
 
     private JMenuBar jMenuBar;
+
     private JMenu jMenu1;
     private JMenu jMenu2;
     private JMenu jMenu3;
     private JMenu jMenu4;
     private JMenu jMenu5;
+
     private JMenuItem jMenuItem1;
     private JMenuItem jMenuItem2;
     private JMenuItem jMenuItem3;
     private JMenuItem jMenuItem4;
     private JMenuItem jMenuItem5;
     private JMenuItem jMenuItem6;
+
+    private JLabel jLabel_search;
+
+    private JTextField jTextField_search;
 
     private JTable jTable1;
     private JTable jTable2;
@@ -74,18 +85,18 @@ public class MainTable extends JFrame{
     private JTable jTable6;
     private JTable jTable7;
     private JTable jTable8;
-
-    private JScrollPane jScrollPane;
-    private Vector rowData;
-    private Vector rowData1;
-    private Vector rowData2;
-    private Vector rowData3;
-    private Vector rowData4;
-    private Vector rowData5;
-    private Vector rowData6;
-    private Vector rowData7;
-    private Vector rowData8;
-    private Vector columnNames;
+//
+//    private JScrollPane jScrollPane;
+//    private Vector rowData;
+//    private Vector rowData1;
+//    private Vector rowData2;
+//    private Vector rowData3;
+//    private Vector rowData4;
+//    private Vector rowData5;
+//    private Vector rowData6;
+//    private Vector rowData7;
+//    private Vector rowData8;
+//    private Vector columnNames;
     private Vector columnNames1;
     private Vector columnNames2;
     private Vector columnNames3;
@@ -93,8 +104,8 @@ public class MainTable extends JFrame{
     private Vector columnNames5;
     private Vector columnNames6;
     private Vector columnNames7;
-    private Vector columnNames8;
-    private Vector hang;
+//    private Vector columnNames8;
+//    private Vector hang;
     private Vector hang1;
     private Vector hang2;
     private Vector hang3;
@@ -102,19 +113,27 @@ public class MainTable extends JFrame{
     private Vector hang5;
     private Vector hang6;
     private Vector hang7;
-    private Vector hang8;
 
-    private String sql;
-    private PreparedStatement preparedStatement;
-    private ResultSet resultSet;
-    private Connection conn;
-    public MainTable(){
-        init();
+    Classes classes = null;
+    String[] paras = null;
+//    private Vector hang8;
+
+
+    /**
+     * 构造函数
+     * 功能：调用界面
+     */
+    public TeachingMetarielDBMS(){
+        teachingMetarielGUI();
     }
 
-    private void init(){
+    /**
+     * GUI界面函数
+     * 功能：绘制主界面
+     */
+    private void teachingMetarielGUI(){
 
-        /*上方菜单栏*/
+        /*菜单栏（BorderLayout，上方）*/
         jMenuBar = new JMenuBar();
         jMenu1 = new JMenu("用户管理模块");
         jMenu2 = new JMenu("教材征订模块");
@@ -138,7 +157,8 @@ public class MainTable extends JFrame{
         jMenuBar.add(jMenu4);
         jMenuBar.add(jMenu5);
 
-        /*下方整体框架实例化*/
+        /*主窗体部分（BorderLayout，下方）*/
+        //主窗口基本框架
         jPanel_left = new JPanel(new GridLayout(8,1));
         jPanel_right = new JPanel(new BorderLayout());
         cardLayout = new CardLayout();
@@ -156,35 +176,36 @@ public class MainTable extends JFrame{
         JLabel jLabel9 = new JLabel("第九张");
         JLabel jLabel10 = new JLabel("第十张");
 
-        /*卡片布局*/
-        /*基本通用操作*/
-        /*数据库操作*/
-        Daodbc dbc = new Daodbc();
-        Revisable dbr = new DBRevisable(dbc.getConnection());
-        Connection connection = dbc.getConnection();
+        /*信息发布窗口主界面（CardLayout,右上）*/
 
         jPanel1 = new JPanel();
         jPanel2 = new JPanel();
-        /*班级信息卡片*/
-        rowData1 = new Vector();
-        columnNames1 = new Vector();
-        hang1 = new Vector();
+        //创建一个数据模型对象
+        classes = new Classes();
+        paras = new String[]{"1"};  //TODO 与韩顺平有出入，反馈检查部分
+        classes.searchClasses("USE DB_Design;SELECT * FROM Users Classes WHERE 1=?",paras);
+        //创建窗体
+        jTable1 = new JTable(classes);
+        jSplitPane1 = new JSplitPane(jTable1);
 
 
-        columnNames1.add("班级号");
-        columnNames1.add("班级名");
-        columnNames1.add("人数");
-
-        //TODO 数据库连接
-        try {
-            dbc.connection(sql);
-            rowData1=dbr.searchClassesInfo("*");
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-
-        jPanel3 = new JPanel();
+//        rowData1 = new Vector();
+//        columnNames1 = new Vector();
+//        hang1 = new Vector();
+//        columnNames1.add("班级号");
+//        columnNames1.add("班级名");
+//        columnNames1.add("人数");
+//
+//        //TODO 数据库连接
+//        try {
+//            dbc.connection(sql);
+//            rowData1=dbr.searchClassesInfo("*");
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
+//
+//
+//        jPanel3 = new JPanel();
         /*教师信息卡片*/
         rowData2 = new Vector();
         columnNames2 = new Vector();
@@ -291,20 +312,31 @@ public class MainTable extends JFrame{
         jPanel11 = new JPanel(new GridLayout(3,1));
         jPanel12 = new JPanel(new GridLayout(3,1));
         jPanel13 = new JPanel();
+
+        //添加、删除、修改、查询按钮定义及监听
         jButton9 = new JButton("添加");
+        jButton9.addActionListener(this);
         jButton10 = new JButton("删除");
+        jButton10.addActionListener(this);
         jButton11 = new JButton("修改");
+        jButton11.addActionListener(this);
         jButton12 = new JButton("查询");
-
-        jPanel9.add(jButton9);
+        jButton12.addActionListener(this);
+        jTextField_search = new JTextField(10);
+        jLabel_search = new JLabel("请输入信息");
+        //将四个控件组合
+        jPanel9.add(jButton12);
+        jPanel9.add(jTextField_search);
+        jPanel9.add(jLabel_search);
+        jPanel10.add(jButton9);
         jPanel10.add(jButton10);
-        jPanel11.add(jButton11);
-        jPanel12.add(jButton12);
+        jPanel10.add(jButton11);
+        jPanel10.add(jPanel9);
 
-        jPanel13.add(jPanel9);
-        jPanel13.add(jPanel10);
-        jPanel13.add(jPanel11);
-        jPanel13.add(jPanel12);
+//        jPanel13.add(jPanel9);
+//        jPanel13.add(jPanel10);
+//        jPanel13.add(jPanel11);
+//        jPanel13.add(jPanel12);
 
         /*组合窗格*/
         jPanel_right.add(cardJPanel,"Center");
@@ -391,53 +423,18 @@ public class MainTable extends JFrame{
         this.setVisible(true);
         this.setSize(1000,600);
         this.setLocationRelativeTo(null);
-
-
-        /*右上侧窗格*/
-//        rowData = new Vector();
-//        columnNames = new Vector();
-//        Vector hang = new Vector();
-//
-//        columnNames.add("姓名");
-//        columnNames.add("性别");
-//        columnNames.add("年龄");
-//        columnNames.add("籍贯");
-//        columnNames.add("系别");
-//        columnNames.add("备注");
-//
-//        Daodbc dbc = new Daodbc();
-//        try{
-//            dbc.getCon();
-//            sql="SELECT * FROM stu";
-//            conn = dbc.getConnection();
-//            preparedStatement=conn.prepareStatement(sql);
-//            resultSet =preparedStatement.executeQuery();
-//            while (resultSet.next()){
-//                hang.add(resultSet.getString(1));
-//                hang.add(resultSet.getString(2));
-//                hang.add(resultSet.getString(3));
-//                hang.add(resultSet.getString(4));
-//                hang.add(resultSet.getString(5));
-//                hang.add(resultSet.getString(6));
-//                rowData.add(hang);
-//            }
-//            jTable = new JTable(rowData,columnNames);
-//            jScrollPane = new JScrollPane(jTable);
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }finally {
-//            try {
-//                if (resultSet != null) resultSet.close();
-//                if (preparedStatement != null) preparedStatement.close();
-//                if (conn != null) conn.close();
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
-
     }
 
+    /**
+     * 主函数
+     * 功能：实例化
+     */
     public static void main(String[] args){
-        MainTable mainTable= new MainTable();
+        TeachingMetarielDBMS teachingMetarielDBMS = new TeachingMetarielDBMS();
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
     }
 }

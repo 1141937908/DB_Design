@@ -1,17 +1,18 @@
 package com.view;
 
+import com.model.Classes;
 import com.model.Teacher;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Created by llc_1 on 2016/1/17.
+ * Created by llc_1 on 2016/1/18.
  */
-public class AddTeacherInfo extends JDialog implements ActionListener{
-
+public class ModifyTeacherInfo extends JDialog implements ActionListener {
     /**
      * 常用组件定义
      */
@@ -37,10 +38,14 @@ public class AddTeacherInfo extends JDialog implements ActionListener{
      * @param teacher
      * @param rowNums
      */
-    public AddTeacherInfo(Frame owner,String title,boolean modal,Teacher teacher,int rowNums){
+    public ModifyTeacherInfo(Frame owner, String title, boolean modal, Teacher teacher, int rowNums){
         /*调用父类的构造函数*/
         super(owner,title,modal);
         addTeacherInfoGUI();
+        jTextField1.setText((String)teacher.getValueAt(rowNums,0));
+        jTextField1.setEditable(false);
+        jTextField2.setText((String)teacher.getValueAt(rowNums,1));
+        jComboBox.setSelectedItem(teacher.getValueAt(rowNums,1));
     }
 
     private void addTeacherInfoGUI(){
@@ -90,29 +95,20 @@ public class AddTeacherInfo extends JDialog implements ActionListener{
         this.setVisible(true);
     }
 
-    /**
-     * 监听函数
-     * 作用：监听并处理数据
-     * @param e
-     */
+    @Override
     public void actionPerformed(ActionEvent e) {
-        /*如果监听到“提交”按钮*/
-        if (e.getSource()==jButton1){
+/*如果监听到了jButton1按钮*/
+        if(e.getSource()==jButton1){
+            String sql = "USE DB_Design;UPDATE Teacher SET Tname=?,Tsex=? WHERE Tno=?";
+            String[] paras={jTextField2.getText(),jComboBox.getSelectedItem().toString(),jTextField1.getText()};
             Teacher teacher = new Teacher();
-            String sql = "USE DB_Design;INSERT INTO Teacher VALUES(?,?,?)";
-            String paras[]={jTextField1.getText(),jTextField2.getText(),jComboBox.getSelectedItem().toString()};
             try {
-                if (!teacher.addTeacher(sql,paras)){
-                    JOptionPane.showConfirmDialog(this, "添加失败！");
-                    return;
-                }
+                teacher.addTeacher(sql,paras);
             } catch (Exception e1) {
                 e1.printStackTrace();
             }
-            //关闭对话框
             this.dispose();
         }
-        /*如果监听到“取消”按钮*/
         else if (e.getSource()==jButton2){
             try{
                 this.dispose();
