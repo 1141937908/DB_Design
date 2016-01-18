@@ -1,16 +1,12 @@
 package com.service;
 
 //import com.dao.DBRevisable;
-import com.dao.Daodbc;
-import com.dao.Revisable;
 import com.model.*;
 
-import javax.management.relation.Relation;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
 import java.util.Vector;
 
 /**

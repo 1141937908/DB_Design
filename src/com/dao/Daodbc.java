@@ -4,6 +4,11 @@ package com.dao;
  * Created by llc_1 on 2016/1/16.
  */
 
+import org.apache.tools.ant.Project;
+import org.apache.tools.ant.taskdefs.SQLExec;
+import org.apache.tools.ant.types.EnumeratedAttribute;
+
+import java.io.File;
 import java.rmi.server.ExportException;
 import java.sql.*;
 
@@ -122,4 +127,24 @@ public class Daodbc {
     public Connection getConnection() {
         return this.connection;
     }
+
+    /**
+     * 获取SQL文件
+     */
+    public void DaoSQL(String src) throws SQLException {
+        SQLExec sqlExec = new SQLExec();
+        /*设置数据库参数*/
+        sqlExec.setDriver(DRIVER);
+        sqlExec.setUrl(DBL);
+        sqlExec.setUserid(DAUBER);
+        sqlExec.setPassword(DAGWOOD);
+        /*执行SQL文件*/
+        sqlExec.setSrc(new File(src));
+        sqlExec.setOnerror((SQLExec.OnError)(EnumeratedAttribute.getInstance(SQLExec.OnError.class,"class")));
+        sqlExec.setPrint(true);//设置是否输出错误
+        sqlExec.setProject(new Project());  //要指定这个属性，不然会出错
+        sqlExec.execute();
+    }
+
+
 }

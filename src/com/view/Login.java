@@ -5,6 +5,7 @@ import com.dao.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.*;
+
 import javax.swing.*;
 
 public class Login extends JFrame implements ActionListener{
@@ -30,6 +31,10 @@ public class Login extends JFrame implements ActionListener{
     public Login() throws Exception {
         logInGUI();
     }
+    public static void main (String[] args) throws Exception{
+        Login login = new Login();
+
+    }
 
     private void logInGUI() throws Exception{
 
@@ -38,13 +43,15 @@ public class Login extends JFrame implements ActionListener{
         jPanel3 = new JPanel();
         jPanel4 = new JPanel();
         jLabel1 = new JLabel("用户名");
-        jLabel2 = new JLabel("密   码");
+        jLabel2 = new JLabel("密    码");
         jButton1 = new JButton("登录");
         jButton1.addActionListener(this);
         jButton2 = new JButton("退出");
         jButton2.addActionListener(this);
         jTextField = new JTextField(20);
+        jTextField.addActionListener(this);
         jPasswordField = new JPasswordField(20);
+        jPasswordField.addActionListener(this);
 
         jPanel2.setSize(5,2);
         jPanel3.setSize(5,2);
@@ -64,7 +71,7 @@ public class Login extends JFrame implements ActionListener{
         this.setTitle("");
         this.setResizable(false);
         this.setLocationRelativeTo(null);
-        this.setSize(400,200);
+        this.setSize(320,200);
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -75,17 +82,18 @@ public class Login extends JFrame implements ActionListener{
 
     }
 
-    class CustomActionListener implements ActionListener{
+    class CustomActionListener extends Component implements ActionListener{
 
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
-            if(actionEvent.getSource() == jButton1){
+            if(jTextField.getText().equals("")&&jPasswordField.getPassword().equals(""))
+                JOptionPane.showMessageDialog(this,"输入不能为空");
+            else if(actionEvent.getSource() == jButton1){
                 //判断触发源是否为提交按钮
-连接数据库
-
+                //连接数据库
                 Daodbc dbc = new Daodbc();
                 try {
-                    dbc.connection();
+                    dbc.getConnection();
                     conn = dbc.getConnection();
                     statement = conn.createStatement();
 
@@ -105,7 +113,7 @@ public class Login extends JFrame implements ActionListener{
                 }finally {
 
                     try {
-                        dbc.getClose(conn,statement,resultSet);
+                        dbc.close();
                     } catch (Exception e1) {
                         e1.printStackTrace();
                     }
@@ -117,12 +125,4 @@ public class Login extends JFrame implements ActionListener{
             }
         }
     }
-
-    public static void main (String[] args) throws Exception {
-        Login login = new Login();
-
-    }
-
-
-
 }
