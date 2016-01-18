@@ -2,13 +2,14 @@ package com.model;
 
 import com.dao.Daodbc;
 
+import javax.swing.table.AbstractTableModel;
 import java.sql.ResultSet;
 import java.util.Vector;
 
 /**
  * Created by secret on 16-1-14.
  */
-public class Book {
+public class Book extends AbstractTableModel{
     /**
      * 添加基本数据，rowData用来存储行数据,columnNames存放列名
      */

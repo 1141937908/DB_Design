@@ -54,7 +54,7 @@ public class ModifyGiveInfo  extends JDialog implements ActionListener{
         jComboBox1.setEditable(false);
         jComboBox2.setSelectedItem(give.getValueAt(rowNums,1));
         jComboBox2.setEditable(false);
-        jComboBox3.setSelectedIndex(Integer.toString(give.getValueAt(rowNums,2)));
+     //   jComboBox3.setSelectedIndex(Integer.toString(give.getValueAt(rowNums,2)));
         jComboBox3.setEditable(false);
         jComboBox4.setSelectedItem(give.getValueAt(rowNums,3));
         jComboBox4.setEditable(false);

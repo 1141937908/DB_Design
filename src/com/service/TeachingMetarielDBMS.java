@@ -1,11 +1,11 @@
 package com.service;
 
-import com.dao.DBRevisable;
+//import com.dao.DBRevisable;
 import com.dao.Daodbc;
 import com.dao.Revisable;
-import com.model.Classes;
-import com.model.Users;
+import com.model.*;
 
+import javax.management.relation.Relation;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -42,8 +42,17 @@ public class TeachingMetarielDBMS extends JFrame implements ActionListener{
     private JPanel cardJPanel;
 
     private JSplitPane jSplitPane;
+    private JScrollPane jScrollPane1;
+    private JScrollPane jScrollPane2;
+    private JScrollPane jScrollPane3;
+    private JScrollPane jScrollPane4;
+    private JScrollPane jScrollPane5;
+    private JScrollPane jScrollPane6;
+    private JScrollPane jScrollPane7;
+    private JScrollPane jScrollPane8;
 
-//    private JList jList;
+
+    //    private JList jList;
     /*菜单控件*/
     private JButton jButton1;
     private JButton jButton2;
@@ -77,6 +86,7 @@ public class TeachingMetarielDBMS extends JFrame implements ActionListener{
 
     private JTextField jTextField_search;
 
+    private JTable jTable;
     private JTable jTable1;
     private JTable jTable2;
     private JTable jTable3;
@@ -123,7 +133,7 @@ public class TeachingMetarielDBMS extends JFrame implements ActionListener{
      * 构造函数
      * 功能：调用界面
      */
-    public TeachingMetarielDBMS(){
+    public TeachingMetarielDBMS() throws Exception {
         teachingMetarielGUI();
     }
 
@@ -131,7 +141,7 @@ public class TeachingMetarielDBMS extends JFrame implements ActionListener{
      * GUI界面函数
      * 功能：绘制主界面
      */
-    private void teachingMetarielGUI(){
+    private void teachingMetarielGUI() throws Exception {
 
         /*菜单栏（BorderLayout，上方）*/
         jMenuBar = new JMenuBar();
@@ -164,29 +174,36 @@ public class TeachingMetarielDBMS extends JFrame implements ActionListener{
         cardLayout = new CardLayout();
         cardJPanel = new JPanel(cardLayout);
 
-        /*预先设置的JLablel*/
-        JLabel jLabel1 = new JLabel("第一张");
-        JLabel jLabel2 = new JLabel("第二张");
-        JLabel jLabel3 = new JLabel("第三张");
-        JLabel jLabel4 = new JLabel("第四张");
-        JLabel jLabel5 = new JLabel("第五张");
-        JLabel jLabel6 = new JLabel("第六张");
-        JLabel jLabel7 = new JLabel("第七张");
-        JLabel jLabel8 = new JLabel("第八张");
-        JLabel jLabel9 = new JLabel("第九张");
-        JLabel jLabel10 = new JLabel("第十张");
+//        /*预先设置的JLablel*/
+//        JLabel jLabel1 = new JLabel("第一张");
+//        JLabel jLabel2 = new JLabel("第二张");
+//        JLabel jLabel3 = new JLabel("第三张");
+//        JLabel jLabel4 = new JLabel("第四张");
+//        JLabel jLabel5 = new JLabel("第五张");
+//        JLabel jLabel6 = new JLabel("第六张");
+//        JLabel jLabel7 = new JLabel("第七张");
+//        JLabel jLabel8 = new JLabel("第八张");
+//        JLabel jLabel9 = new JLabel("第九张");
+//        JLabel jLabel10 = new JLabel("第十张");
 
         /*信息发布窗口主界面（CardLayout,右上）*/
 
         jPanel1 = new JPanel();
+        Users users = new Users();
+        String[] paras = {"1"};
+        users.searchUsers("USER DB_Design;SELECT * FROM Users WHERE 1=?",paras);
+        //初始化窗口
+        jTable1 = new JTable(users);
+        jScrollPane1 = new JScrollPane(jTable1);
+
         jPanel2 = new JPanel();
         //创建一个数据模型对象
         classes = new Classes();
-        paras = new String[]{"1"};  //TODO 与韩顺平有出入，反馈检查部分
-        classes.searchClasses("USE DB_Design;SELECT * FROM Users Classes WHERE 1=?",paras);
+        paras= new String[]{"1"};
+        classes.searchClasses("USE DB_Design;SELECT * FROM Classes WHERE 1=?",paras);
         //创建窗体
-        jTable1 = new JTable(classes);
-        jSplitPane1 = new JSplitPane(jTable1);
+        jTable2 = new JTable(classes);
+        jScrollPane2 = new JScrollPane(jTable2);
 
 
 //        rowData1 = new Vector();
@@ -205,97 +222,132 @@ public class TeachingMetarielDBMS extends JFrame implements ActionListener{
 //        }
 //
 //
-//        jPanel3 = new JPanel();
-        /*教师信息卡片*/
-        rowData2 = new Vector();
-        columnNames2 = new Vector();
-        hang2 = new Vector();
-
-        columnNames2.add("教师号");
-        columnNames2.add("姓名");
-        columnNames2.add("性别");
-
-        //TODO 数据库连接
-
+        jPanel3 = new JPanel();
+        Teacher teacher = new Teacher();
+        paras = new String[]{"1"};
+        teacher.searchTeacher("USE DB_Design;SELECT * FORM Teacher WHERE 1=?",paras);
+        //创建窗体
+        jTable3 = new JTable(teacher);
+        jScrollPane3 = new JScrollPane(jTable3);
+//        /*教师信息卡片*/
+//        rowData2 = new Vector();
+//        columnNames2 = new Vector();
+//        hang2 = new Vector();
+//
+//        columnNames2.add("教师号");
+//        columnNames2.add("姓名");
+//        columnNames2.add("性别");
+//
+//        //TODO 数据库连接
+//
 
         jPanel4 = new JPanel();
-        /*课程信息卡片*/
-        rowData3 = new Vector();
-        columnNames3 = new Vector();
-        hang3 = new Vector();
-
-        columnNames3.add("课程号");
-        columnNames3.add("课程名");
-
-        //TODO 数据库连接
+        Lesson lesson = new Lesson();
+        paras = new String[]{"1"};
+        lesson.searchLesson("USE DB_Design;SELECT * FROM Lesson WHERE 1=?",paras);
+        //创建窗体
+        jTable4 = new JTable(lesson);
+        jScrollPane4 = new JScrollPane(jTable4);
+//        /*课程信息卡片*/
+//        rowData3 = new Vector();
+//        columnNames3 = new Vector();
+//        hang3 = new Vector();
+//
+//        columnNames3.add("课程号");
+//        columnNames3.add("课程名");
+//
+//        //TODO 数据库连接
 
         jPanel5 = new JPanel();
-        /*教材信息卡片*/
-        rowData4 = new Vector();
-        columnNames4 = new Vector();
-        hang4 = new Vector();
-
-        columnNames4.add("教材编号");
-        columnNames4.add("教材名称");
-        columnNames4.add("出版社");
-        columnNames4.add("作者");
-        columnNames4.add("价格");
-        columnNames4.add("库存量");
-
-        //TODO 数据库连接
+        Book book = new Book();
+        paras = new String[]{"1"};
+        book.searchBook("USE DB_Design;SELECT * FROM Book WHERE 1=?",paras);
+        //窗体初始化
+        jTable5 = new JTable(book);
+        jScrollPane5 = new JScrollPane(jTable5);
+//        /*教材信息卡片*/
+//        rowData4 = new Vector();
+//        columnNames4 = new Vector();
+//        hang4 = new Vector();
+//
+//        columnNames4.add("教材编号");
+//        columnNames4.add("教材名称");
+//        columnNames4.add("出版社");
+//        columnNames4.add("作者");
+//        columnNames4.add("价格");
+//        columnNames4.add("库存量");
+//
+//        //TODO 数据库连接
 
         jPanel6 = new JPanel();
-        /*征订信息*/
-        rowData5 = new Vector();
-        columnNames5 = new Vector();
-        hang5 = new Vector();
-
-        columnNames5.add("班级号");
-        columnNames5.add("教师号");
-        columnNames5.add("课程号");
-        columnNames5.add("教材号");
-        columnNames5.add("订购数量");
-
-
-        //TODO 数据库连接
+        Order order = new Order();
+        paras = new String[]{"1"};
+        order.searchOrder("USE DB_Design;SELECT * FROM Order WHERE 1=?",paras);
+        //窗口初始化
+        jTable6 = new JTable(order);
+        jScrollPane6 = new JScrollPane(jTable6);
+//        /*征订信息*/
+//        rowData5 = new Vector();
+//        columnNames5 = new Vector();
+//        hang5 = new Vector();
+//
+//        columnNames5.add("班级号");
+//        columnNames5.add("教师号");
+//        columnNames5.add("课程号");
+//        columnNames5.add("教材号");
+//        columnNames5.add("订购数量");
+//
+//
+//        //TODO 数据库连接
 
         jPanel7 = new JPanel();
-        /*发放信息卡片*/
-        rowData6 = new Vector();
-        columnNames6 = new Vector();
-        hang6 = new Vector();
-
-        columnNames6.add("班级号");
-        columnNames6.add("教师号");
-        columnNames6.add("课程号");
-        columnNames6.add("教材号");
-        columnNames6.add("发放情况");
-        columnNames6.add("发放日期");
-
-        //TODO 数据库连接
+        Give give = new Give();
+        paras = new String[]{"1"};
+        give.searchGive("USE DB_Deign;SECRET * FROM Give WHERE 1=?",paras);
+        //初始化窗口
+        jTable7 = new JTable(give);
+        jScrollPane7 = new JScrollPane(jTable7);
+//        /*发放信息卡片*/
+//        rowData6 = new Vector();
+//        columnNames6 = new Vector();
+//        hang6 = new Vector();
+//
+//        columnNames6.add("班级号");
+//        columnNames6.add("教师号");
+//        columnNames6.add("课程号");
+//        columnNames6.add("教材号");
+//        columnNames6.add("发放情况");
+//        columnNames6.add("发放日期");
+//
+//        //TODO 数据库连接
 
         jPanel8 = new JPanel();
-        /*关系库信息*/
-        rowData7 = new Vector();
-        columnNames7 = new Vector();
-        hang7 = new Vector();
+        Relationship relationship = new Relationship();
+        paras = new String[]{"1"};
+        relationship.addRelationship("USE DB_Deign;SECRET * FROM RelationWHERE 1=?",paras);
+        //初始化窗口
+        jTable8 = new JTable(relationship);
+        jScrollPane8 = new JScrollPane(jTable8);
+//        /*关系库信息*/
+//        rowData7 = new Vector();
+//        columnNames7 = new Vector();
+//        hang7 = new Vector();
+//
+//        columnNames7.add("班级号");
+//        columnNames7.add("教师号");
+//        columnNames7.add("课程号");
+//        columnNames7.add("教材号");
+//
+//        //TODO 数据库连接
 
-        columnNames7.add("班级号");
-        columnNames7.add("教师号");
-        columnNames7.add("课程号");
-        columnNames7.add("教材号");
-
-        //TODO 数据库连接
-
-        /*预处理文本框*/
         jPanel1.add(jTable1);
-        jPanel2.add(jLabel2);
-        jPanel3.add(jLabel3);
-        jPanel4.add(jLabel4);
-        jPanel5.add(jLabel5);
-        jPanel6.add(jLabel6);
-        jPanel7.add(jLabel7);
-        jPanel8.add(jLabel8);
+        jPanel2.add(jTable2);
+        jPanel3.add(jTable3);
+        jPanel4.add(jTable4);
+        jPanel5.add(jTable5);
+        jPanel6.add(jTable6);
+        jPanel7.add(jTable7);
+        jPanel8.add(jTable8);
 
         /*将8个面板带进card中*/
         cardJPanel.add(jPanel1,"jp1");
@@ -409,7 +461,6 @@ public class TeachingMetarielDBMS extends JFrame implements ActionListener{
         jPanel_left.add(jButton8);
 
         /*拆分窗格*/
-//        jSplitPane = new JSplitPane();  //分隔栏
         jSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,jPanel_left,jPanel_right);
         jSplitPane.setDividerLocation(1.0 / 3.0);
         jSplitPane.setEnabled(false);
@@ -429,7 +480,7 @@ public class TeachingMetarielDBMS extends JFrame implements ActionListener{
      * 主函数
      * 功能：实例化
      */
-    public static void main(String[] args){
+    public static void main(String[] args) throws Exception {
         TeachingMetarielDBMS teachingMetarielDBMS = new TeachingMetarielDBMS();
     }
 

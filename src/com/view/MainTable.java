@@ -1,8 +1,11 @@
+/*
 package com.view;
 
+*/
 /**
  * Created by llc_1 on 2016/1/15.
- */
+ *//*
+
 
 import com.dao.*;
 import com.model.Classes;
@@ -114,7 +117,9 @@ public class MainTable extends JFrame{
 
     private void init(){
 
-        /*上方菜单栏*/
+        */
+/*上方菜单栏*//*
+
         jMenuBar = new JMenuBar();
         jMenu1 = new JMenu("用户管理模块");
         jMenu2 = new JMenu("教材征订模块");
@@ -138,13 +143,17 @@ public class MainTable extends JFrame{
         jMenuBar.add(jMenu4);
         jMenuBar.add(jMenu5);
 
-        /*下方整体框架实例化*/
+        */
+/*下方整体框架实例化*//*
+
         jPanel_left = new JPanel(new GridLayout(8,1));
         jPanel_right = new JPanel(new BorderLayout());
         cardLayout = new CardLayout();
         cardJPanel = new JPanel(cardLayout);
 
-        /*预先设置的JLablel*/
+        */
+/*预先设置的JLablel*//*
+
         JLabel jLabel1 = new JLabel("第一张");
         JLabel jLabel2 = new JLabel("第二张");
         JLabel jLabel3 = new JLabel("第三张");
@@ -156,16 +165,24 @@ public class MainTable extends JFrame{
         JLabel jLabel9 = new JLabel("第九张");
         JLabel jLabel10 = new JLabel("第十张");
 
-        /*卡片布局*/
-        /*基本通用操作*/
-        /*数据库操作*/
+        */
+/*卡片布局*//*
+
+        */
+/*基本通用操作*//*
+
+        */
+/*数据库操作*//*
+
         Daodbc dbc = new Daodbc();
         Revisable dbr = new DBRevisable(dbc.getConnection());
         Connection connection = dbc.getConnection();
 
         jPanel1 = new JPanel();
         jPanel2 = new JPanel();
-        /*班级信息卡片*/
+        */
+/*班级信息卡片*//*
+
         rowData1 = new Vector();
         columnNames1 = new Vector();
         hang1 = new Vector();
@@ -185,7 +202,9 @@ public class MainTable extends JFrame{
 
 
         jPanel3 = new JPanel();
-        /*教师信息卡片*/
+        */
+/*教师信息卡片*//*
+
         rowData2 = new Vector();
         columnNames2 = new Vector();
         hang2 = new Vector();
@@ -198,7 +217,9 @@ public class MainTable extends JFrame{
 
 
         jPanel4 = new JPanel();
-        /*课程信息卡片*/
+        */
+/*课程信息卡片*//*
+
         rowData3 = new Vector();
         columnNames3 = new Vector();
         hang3 = new Vector();
@@ -209,7 +230,9 @@ public class MainTable extends JFrame{
         //TODO 数据库连接
 
         jPanel5 = new JPanel();
-        /*教材信息卡片*/
+        */
+/*教材信息卡片*//*
+
         rowData4 = new Vector();
         columnNames4 = new Vector();
         hang4 = new Vector();
@@ -224,7 +247,9 @@ public class MainTable extends JFrame{
         //TODO 数据库连接
 
         jPanel6 = new JPanel();
-        /*征订信息*/
+        */
+/*征订信息*//*
+
         rowData5 = new Vector();
         columnNames5 = new Vector();
         hang5 = new Vector();
@@ -239,7 +264,9 @@ public class MainTable extends JFrame{
         //TODO 数据库连接
 
         jPanel7 = new JPanel();
-        /*发放信息卡片*/
+        */
+/*发放信息卡片*//*
+
         rowData6 = new Vector();
         columnNames6 = new Vector();
         hang6 = new Vector();
@@ -254,7 +281,9 @@ public class MainTable extends JFrame{
         //TODO 数据库连接
 
         jPanel8 = new JPanel();
-        /*关系库信息*/
+        */
+/*关系库信息*//*
+
         rowData7 = new Vector();
         columnNames7 = new Vector();
         hang7 = new Vector();
@@ -266,7 +295,9 @@ public class MainTable extends JFrame{
 
         //TODO 数据库连接
 
-        /*预处理文本框*/
+        */
+/*预处理文本框*//*
+
         jPanel1.add(jTable1);
         jPanel2.add(jLabel2);
         jPanel3.add(jLabel3);
@@ -276,7 +307,9 @@ public class MainTable extends JFrame{
         jPanel7.add(jLabel7);
         jPanel8.add(jLabel8);
 
-        /*将8个面板带进card中*/
+        */
+/*将8个面板带进card中*//*
+
         cardJPanel.add(jPanel1,"jp1");
         cardJPanel.add(jPanel2,"jp2");
         cardJPanel.add(jPanel3,"jp3");
@@ -285,7 +318,9 @@ public class MainTable extends JFrame{
         cardJPanel.add(jPanel6,"jp6");
         cardJPanel.add(jPanel7,"jp7");
         cardJPanel.add(jPanel8,"jp8");
-        /*右下窗格*/
+        */
+/*右下窗格*//*
+
         jPanel9 = new JPanel(new GridLayout(3,1));
         jPanel10 = new JPanel(new GridLayout(3,1));
         jPanel11 = new JPanel(new GridLayout(3,1));
@@ -306,11 +341,15 @@ public class MainTable extends JFrame{
         jPanel13.add(jPanel11);
         jPanel13.add(jPanel12);
 
-        /*组合窗格*/
+        */
+/*组合窗格*//*
+
         jPanel_right.add(cardJPanel,"Center");
         jPanel_right.add(jPanel13,"South");
 
-        /*左侧菜单栏*/
+        */
+/*左侧菜单栏*//*
+
         jButton1 = new JButton("用户信息");
         jButton1.addActionListener(new ActionListener() {
             @Override
@@ -376,13 +415,17 @@ public class MainTable extends JFrame{
         jPanel_left.add(jButton7);
         jPanel_left.add(jButton8);
 
-        /*拆分窗格*/
+        */
+/*拆分窗格*//*
+
 //        jSplitPane = new JSplitPane();  //分隔栏
         jSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,jPanel_left,jPanel_right);
         jSplitPane.setDividerLocation(1.0 / 3.0);
         jSplitPane.setEnabled(false);
 
-        /*整体框架*/
+        */
+/*整体框架*//*
+
         this.add(jMenuBar,"North");
         this.add(jSplitPane,"Center");
         this.jSplitPane.setDividerLocation(2.0 /10.0);  //jSplitPane比例分割
@@ -393,7 +436,9 @@ public class MainTable extends JFrame{
         this.setLocationRelativeTo(null);
 
 
-        /*右上侧窗格*/
+        */
+/*右上侧窗格*//*
+
 //        rowData = new Vector();
 //        columnNames = new Vector();
 //        Vector hang = new Vector();
@@ -441,3 +486,4 @@ public class MainTable extends JFrame{
         MainTable mainTable= new MainTable();
     }
 }
+*/

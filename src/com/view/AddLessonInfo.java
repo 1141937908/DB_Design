@@ -1,6 +1,6 @@
 package com.view;
 
-import com.dao.DBRevisable;
+//import com.dao.DBRevisable;
 import com.dao.Daodbc;
 import com.dao.Revisable;
 import com.model.Book;

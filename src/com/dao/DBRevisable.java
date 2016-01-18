@@ -1,8 +1,11 @@
+/*
 package com.dao;
 
+*/
 /**
  * Created by llc_1 on 2016/1/16.
- */
+ *//*
+
 import com.model.*;
 
 import java.beans.VetoableChangeListener;
@@ -37,11 +40,15 @@ public class DBRevisable implements Revisable{
             this.preparedStatement.setString(4,book.getBookWriter());
             this.preparedStatement.setDouble(5,book.getBookPrice());
             this.preparedStatement.setInt(6,book.getBookNumber());
-            /*如果存在更新*/
+            */
+/*如果存在更新*//*
+
             if (this.preparedStatement.executeUpdate() > 0 ) {
                 flag = true;
             }
-            /*断开连接*/
+            */
+/*断开连接*//*
+
             this.preparedStatement.close();
         }catch (SQLException e){
             System.out.println("Book表信息添加失败！SQL错误！");
@@ -63,11 +70,15 @@ public class DBRevisable implements Revisable{
             this.preparedStatement.setString(1,classes.getClassesId());
             this.preparedStatement.setString(2,classes.getClassesName());
             this.preparedStatement.setInt(3,classes.getClassesNumber());
-            /*如果存在更新*/
+            */
+/*如果存在更新*//*
+
             if (this.preparedStatement.executeUpdate() > 0 ) {
                 flag = true;
             }
-            /*断开连接*/
+            */
+/*断开连接*//*
+
             this.preparedStatement.close();
         }catch (SQLException e){
             System.out.println("Classes表信息添加失败！SQL错误！");
@@ -88,11 +99,15 @@ public class DBRevisable implements Revisable{
             this.preparedStatement = this.connection.prepareStatement(sql);
             this.preparedStatement.setString(1,lesson.getLessonId());
             this.preparedStatement.setString(2,lesson.getLessonName());
-            /*如果存在更新*/
+            */
+/*如果存在更新*//*
+
             if (this.preparedStatement.executeUpdate() > 0 ) {
                 flag = true;
             }
-            /*断开连接*/
+            */
+/*断开连接*//*
+
             this.preparedStatement.close();
         }catch (SQLException e){
             System.out.println("Lesson表信息添加失败！SQL错误！");
@@ -114,11 +129,15 @@ public class DBRevisable implements Revisable{
             this.preparedStatement.setString(1,teacher.getTeaId());
             this.preparedStatement.setString(2,teacher.getTeaName());
             this.preparedStatement.setString(3,teacher.getTeaSex());
-            //*如果存在更新*/
+            /*/
+/*如果存在更新*//*
+
             if (this.preparedStatement.executeUpdate() > 0 ) {
                 flag = true;
             }
-            /*断开连接*/
+            */
+/*断开连接*//*
+
             this.preparedStatement.close();
         }catch (SQLException e){
             System.out.println("Book表信息添加失败！SQL错误！");
@@ -140,11 +159,15 @@ public class DBRevisable implements Revisable{
             this.preparedStatement.setString(1,users.getId());
             this.preparedStatement.setString(2,users.getPassword());
             this.preparedStatement.setString(3,users.getUserName());
-            /*如果存在更新*/
+            */
+/*如果存在更新*//*
+
             if (this.preparedStatement.executeUpdate() > 0 ) {
                 flag = true;
             }
-            /*断开连接*/
+            */
+/*断开连接*//*
+
             this.preparedStatement.close();
         }catch (SQLException e){
             System.out.println("Book表信息添加失败！SQL错误！");
@@ -168,11 +191,15 @@ public class DBRevisable implements Revisable{
             this.preparedStatement.setString(3,order.getLno());
             this.preparedStatement.setString(4,order.getBno());
             this.preparedStatement.setInt(5,order.getOrderNumber());
-            /*如果存在更新*/
+            */
+/*如果存在更新*//*
+
             if (this.preparedStatement.executeUpdate() > 0 ) {
                 flag = true;
             }
-            /*断开连接*/
+            */
+/*断开连接*//*
+
             this.preparedStatement.close();
         }catch (SQLException e){
             System.out.println("Order表信息添加失败！SQL错误！");
@@ -197,11 +224,15 @@ public class DBRevisable implements Revisable{
             this.preparedStatement.setString(4,give.getBno());
             this.preparedStatement.setBoolean(5,give.getGiveState());
             this.preparedStatement.setString(6,give.getGiveDatatime());
-            /*如果存在更新*/
+            */
+/*如果存在更新*//*
+
             if (this.preparedStatement.executeUpdate() > 0 ) {
                 flag = true;
             }
-            /*断开连接*/
+            */
+/*断开连接*//*
+
             this.preparedStatement.close();
         }catch (SQLException e){
             System.out.println("Give表信息添加失败！SQL错误！");
@@ -212,6 +243,7 @@ public class DBRevisable implements Revisable{
         }
 //        return flag;
     }
+*/
 /*
 
     @Override
@@ -224,7 +256,15 @@ public class DBRevisable implements Revisable{
             this.preparedStatement.setString(1,name);
             *//*
 */
+/*
+*//*
+
+*/
 /*如果存在更新*//*
+*/
+/*
+*//*
+
 */
 /*
             if (this.preparedStatement.executeUpdate() > 0){
@@ -232,7 +272,15 @@ public class DBRevisable implements Revisable{
             }
             *//*
 */
+/*
+*//*
+
+*/
 /*断开连接*//*
+*/
+/*
+*//*
+
 */
 /*
             this.preparedStatement.close();;
@@ -256,7 +304,15 @@ public class DBRevisable implements Revisable{
             this.preparedStatement.setString(1,name);
             *//*
 */
+/*
+*//*
+
+*/
 /*如果存在更新*//*
+*/
+/*
+*//*
+
 */
 /*
             if (this.preparedStatement.executeUpdate() > 0){
@@ -264,7 +320,15 @@ public class DBRevisable implements Revisable{
             }
             *//*
 */
+/*
+*//*
+
+*/
 /*断开连接*//*
+*/
+/*
+*//*
+
 */
 /*
             this.preparedStatement.close();;
@@ -288,7 +352,15 @@ public class DBRevisable implements Revisable{
             this.preparedStatement.setString(1,name);
             *//*
 */
+/*
+*//*
+
+*/
 /*如果存在更新*//*
+*/
+/*
+*//*
+
 */
 /*
             if (this.preparedStatement.executeUpdate() > 0){
@@ -296,7 +368,15 @@ public class DBRevisable implements Revisable{
             }
             *//*
 */
+/*
+*//*
+
+*/
 /*断开连接*//*
+*/
+/*
+*//*
+
 */
 /*
             this.preparedStatement.close();;
@@ -320,7 +400,15 @@ public class DBRevisable implements Revisable{
             this.preparedStatement.setString(1,name);
             *//*
 */
+/*
+*//*
+
+*/
 /*如果存在更新*//*
+*/
+/*
+*//*
+
 */
 /*
             if (this.preparedStatement.executeUpdate() > 0){
@@ -328,7 +416,15 @@ public class DBRevisable implements Revisable{
             }
             *//*
 */
+/*
+*//*
+
+*/
 /*断开连接*//*
+*/
+/*
+*//*
+
 */
 /*
             this.preparedStatement.close();;
@@ -352,7 +448,15 @@ public class DBRevisable implements Revisable{
             this.preparedStatement.setString(1,name);
             *//*
 */
+/*
+*//*
+
+*/
 /*如果存在更新*//*
+*/
+/*
+*//*
+
 */
 /*
             if (this.preparedStatement.executeUpdate() > 0){
@@ -360,7 +464,15 @@ public class DBRevisable implements Revisable{
             }
             *//*
 */
+/*
+*//*
+
+*/
 /*断开连接*//*
+*/
+/*
+*//*
+
 */
 /*
             this.preparedStatement.close();;
@@ -383,7 +495,8 @@ public class DBRevisable implements Revisable{
     public void delGiveInfo(String name) {
 
     }
-*/
+*//*
+
 
     public void delInfo(String name,String table,String primaryKey){
         boolean flag = false;
@@ -394,11 +507,15 @@ public class DBRevisable implements Revisable{
             this.preparedStatement.setString(1,name);
             this.preparedStatement.setString(2,table);
             //this.preparedStatement.setString(3,primaryKey);
-            /*如果存在则更新*/
+            */
+/*如果存在则更新*//*
+
             if(this.preparedStatement.executeUpdate() > 0){
                 flag = true;
             }
-            /*断开连接*/
+            */
+/*断开连接*//*
+
             this.preparedStatement.close();
         }catch (SQLException e){
             System.out.println("删除行数据失败！SQL错误！");
@@ -509,3 +626,4 @@ public class DBRevisable implements Revisable{
         return null;
     }
 }
+*/
