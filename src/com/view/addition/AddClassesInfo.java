@@ -77,19 +77,16 @@ public class AddClassesInfo extends JDialog implements ActionListener {
         /*窗体基本设置*/
         this.setLayout(new GridLayout(5,1));
         // this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setSize(300,350);
         this.setLocationRelativeTo(null);
-        this.setSize(300,200);
         this.setResizable(false);
         this.setVisible(true);
         }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
-        if (jTextField1.getText().equals("") && jTextField3.getText().equals(""))
-            JOptionPane.showMessageDialog(this, "输入不能为空");
        /*如果监听到“提交”按钮*/
-        else if (e.getSource() == jButton1) {
+        if (e.getSource() == jButton1) {
             Classes classes = new Classes();
             String sql = "USE DB_Design;INSERT INTO Classes VALUES(?,?,?)";
             String paras[]={jTextField1.getText(),jTextField2.getText(),jTextField3.getText()};

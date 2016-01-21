@@ -49,7 +49,7 @@ public class ModifyUsersInfo extends JDialog implements ActionListener {
 		jTextField1 = new JTextField(20);
 		jTextField1.setText((String) users.getValueAt(rowNums, 0));
 		jTextField1.setEditable(false);
-		jPasswordField = new JPasswordField();
+		jPasswordField = new JPasswordField(20);
 		jPasswordField.setText((String) users.getValueAt(rowNums, 1));
 		jTextField2 = new JTextField(20);
 		jTextField2.setText((String) users.getValueAt(rowNums, 2));
@@ -70,9 +70,9 @@ public class ModifyUsersInfo extends JDialog implements ActionListener {
 
 		/* 窗体基本设置 */
 		this.setLayout(new GridLayout(5, 1));
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setSize(300, 350);
 		this.setLocationRelativeTo(null);
-		this.setSize(300, 200);
 		this.setResizable(false);
 		this.setVisible(true);
 	}

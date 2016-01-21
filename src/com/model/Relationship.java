@@ -25,10 +25,10 @@ public class Relationship extends AbstractTableModel{
             ResultSet resultSet=dbc.searchDataBase(sql,paras);
             while (resultSet.next()){
                 Vector hang = new Vector();
-                hang.add(resultSet.getString(1));
-                hang.add(resultSet.getString(2));
-                hang.add(resultSet.getString(3));
-                hang.add(resultSet.getString(4));
+                hang.add(resultSet.getString("Cno"));
+                hang.add(resultSet.getString("Tno"));
+                hang.add(resultSet.getString("Lno"));
+                hang.add(resultSet.getString("Bno"));
                 rowData.add(hang);
             }
         }catch (Exception e){

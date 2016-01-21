@@ -74,9 +74,9 @@ public class ModifyClassesInfo extends JDialog implements ActionListener{
 
         /*窗体基本设置*/
         this.setLayout(new GridLayout(5,1));
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setSize(300,400);
         this.setLocationRelativeTo(null);
-        this.setSize(300,200);
         this.setResizable(false);
         this.setVisible(true);
     }

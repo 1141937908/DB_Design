@@ -191,7 +191,7 @@ public class TeacherTable extends JFrame implements ActionListener {
 			}
 			String TeacherId = (String) teacher.getValueAt(rowIndex, 0);
 			System.out.println(TeacherId);
-			String sql = "USE DB_Design;DELETE FROM Teacher WHERE Bno=?";
+			String sql = "USE DB_Design;DELETE FROM Teacher WHERE Tno=?";
 			String[] paras = { TeacherId };
 			Teacher teacher = new Teacher();
 			try {

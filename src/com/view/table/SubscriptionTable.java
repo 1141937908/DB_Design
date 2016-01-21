@@ -10,10 +10,15 @@ import com.view.modify.ModifySubscriptionInfo;
 import javax.swing.*;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Vector;
 
 public class SubscriptionTable extends JFrame implements ActionListener {
 
@@ -22,6 +27,10 @@ public class SubscriptionTable extends JFrame implements ActionListener {
 	private JButton jButton3;
 	private JButton jButton4;
 	private JButton jButton5;
+	private JComboBox jComboBox1;
+	private JComboBox jComboBox2;
+	private JComboBox jComboBox3;
+	private JComboBox jComboBox4;
 	private JTable jTable2;
 	private JTextField jTextField1;
 	private JTextField jTextField2;
@@ -112,10 +121,68 @@ public class SubscriptionTable extends JFrame implements ActionListener {
 		jButton4.addActionListener(this);
 		jButton5 = new JButton("刷新");
 		jButton5.addActionListener(this);
-		jTextField1 = new JTextField(20);
-		jTextField2 = new JTextField(20);
-		jTextField3 = new JTextField(20);
-		jTextField4 = new JTextField(20);
+		
+		/* 连接数据库查找相关信息 */
+		Daodbc dbc = new Daodbc();
+		PreparedStatement preparedStatement;
+		ResultSet resultSet;
+		Connection connection = dbc.getConnection();
+
+		String sql1 = "SELECT Cno FROM Subscription";
+		String sql2 = "SELECT Tno FROM Subscription";
+		String sql3 = "SELECT Lno FROM Subscription";
+		String sql4 = "SELECT Bno FROM Subscription";
+
+		Vector vector1 = new Vector();
+		Vector vector2 = new Vector();
+		Vector vector3 = new Vector();
+		Vector vector4 = new Vector();
+
+		try {
+			preparedStatement = connection.prepareStatement(sql1);
+			resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				vector1.add(resultSet.getString("Cno"));
+			}
+
+			preparedStatement = connection.prepareStatement(sql2);
+			resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				vector2.add(resultSet.getString("Tno"));
+			}
+
+			preparedStatement = connection.prepareStatement(sql3);
+			resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				vector3.add(resultSet.getString("Lno"));
+			}
+
+			preparedStatement = connection.prepareStatement(sql4);
+			resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				vector4.add(resultSet.getString("Bno"));
+			}
+
+			jComboBox1 = new JComboBox(vector1);
+			jComboBox2 = new JComboBox(vector2);
+			jComboBox3 = new JComboBox(vector3);
+			jComboBox4 = new JComboBox(vector4);
+			jComboBox1.setPreferredSize(new Dimension(150, 20));
+			jComboBox2.setPreferredSize(new Dimension(150, 20));
+			jComboBox3.setPreferredSize(new Dimension(150, 20));
+			jComboBox4.setPreferredSize(new Dimension(150, 20));
+
+			// jComboBox1.setSize();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			dbc.close();
+		}
+		
+//		jTextField1 = new JTextField(20);
+//		jTextField2 = new JTextField(20);
+//		jTextField3 = new JTextField(20);
+//		jTextField4 = new JTextField(20);
 		jLabel1 = new JLabel("班级号", JLabel.CENTER);
 		jLabel2 = new JLabel("教师号", JLabel.CENTER);
 		jLabel3 = new JLabel("课程号", JLabel.CENTER);
@@ -126,13 +193,17 @@ public class SubscriptionTable extends JFrame implements ActionListener {
 		jPanel2.setLayout(new GridLayout(2, 2));
 
 		jPanel2.add(jLabel1);
-		jPanel2.add(jTextField1);
+//		jPanel2.add(jTextField1);
+		jPanel2.add(jComboBox1);
 		jPanel2.add(jLabel2);
-		jPanel2.add(jTextField2);
+//		jPanel2.add(jTextField2);
+		jPanel2.add(jComboBox2);
 		jPanel2.add(jLabel3);
-		jPanel2.add(jTextField3);
+//		jPanel2.add(jTextField3);
+		jPanel2.add(jComboBox3);
 		jPanel2.add(jLabel4);
-		jPanel2.add(jTextField4);
+//		jPanel2.add(jTextField4);
+		jPanel2.add(jComboBox4);
 
 		jPanel1.add(jButton1);
 		jPanel1.add(jButton2);
@@ -269,10 +340,15 @@ public class SubscriptionTable extends JFrame implements ActionListener {
 		}
 		/* 查询 */
 		else if (e.getSource() == jButton4) {
-			String Cno = this.jTextField1.getText().trim();
-			String Tno = this.jTextField2.getText().trim();
-			String Lno = this.jTextField3.getText().trim();
-			String Bno = this.jTextField4.getText().trim();
+//			String Cno = this.jTextField1.getText().trim();
+//			String Tno = this.jTextField2.getText().trim();
+//			String Lno = this.jTextField3.getText().trim();
+//			String Bno = this.jTextField4.getText().trim();
+			
+			String Cno = this.jComboBox1.getSelectedItem().toString();
+			String Tno = this.jComboBox2.getSelectedItem().toString();
+			String Lno = this.jComboBox3.getSelectedItem().toString();
+			String Bno = this.jComboBox4.getSelectedItem().toString();
 			String sql = "USE DB_Design;SELECT * FROM Subscription WHERE Cno=? AND Tno=? AND Lno=? AND Bno=?";
 			String[] paras = { Cno, Tno, Lno, Bno };
 			subscription = new Subscription();

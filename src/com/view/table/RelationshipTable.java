@@ -10,6 +10,7 @@ import com.view.modify.ModifyBookInfo;
 import javax.swing.*;
 
 import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
@@ -21,12 +22,23 @@ public class RelationshipTable extends JFrame implements ActionListener {
 	private JButton jButton3;
 	private JButton jButton4;
 	private JButton jButton5;
+	private JTextField jTextField1;
+	private JTextField jTextField2;
+	private JTextField jTextField3;
+	private JTextField jTextField4;
 	private JTable jTable1, jTable2;
+	private JLabel jLabel1;
+	private JLabel jLabel2;
+	private JLabel jLabel3;
+	private JLabel jLabel4;
+	private JPanel jPanel3;
+	private JPanel jPanel4;
 	private JTextField jTextField;
 	private JPanel jPanel1, jPanel2;
 	private JMenuBar jMenuBar;
 	private JMenu jMenu1;
 	private JMenu jMenu2;
+
 	private JMenuItem jMenuItem1_1;
 	private JMenuItem jMenuItem1_2;
 	private JMenuItem jMenuItem1_3;
@@ -107,12 +119,31 @@ public class RelationshipTable extends JFrame implements ActionListener {
 		jButton5 = new JButton("刷新");
 		jButton5.addActionListener(this);
 		jTextField = new JTextField(20);
+		jTextField1 = new JTextField(20);
+		jTextField2 = new JTextField(20);
+		jTextField3 = new JTextField(20);
+		jTextField4 = new JTextField(20);
+		jLabel1 = new JLabel("班级号", JLabel.CENTER);
+		jLabel2 = new JLabel("教师号", JLabel.CENTER);
+		jLabel3 = new JLabel("课程号", JLabel.CENTER);
+		jLabel4 = new JLabel("教材号", JLabel.CENTER);
+		jPanel2 = new JPanel();
+		jPanel2.setLayout(new GridLayout(2, 4));
+		jPanel2.add(jLabel1);
+		jPanel2.add(jTextField1);
+		jPanel2.add(jLabel2);
+		jPanel2.add(jTextField2);
+		jPanel2.add(jLabel3);
+		jPanel2.add(jTextField3);
+		jPanel2.add(jLabel4);
+		jPanel2.add(jTextField4);
 		jPanel1 = new JPanel();
 		jPanel1.add(jButton1);
 		jPanel1.add(jButton2);
 		jPanel1.add(jButton3);
 		jPanel1.add(jButton4);
-		jPanel1.add(jTextField);
+		// jPanel1.add(jTextField);
+		jPanel1.add(jPanel2);
 		jPanel1.add(jButton5);
 
 		relationship = new Relationship();
@@ -170,9 +201,12 @@ public class RelationshipTable extends JFrame implements ActionListener {
 			 */
 		/* 查询 */
 		else if (e.getSource() == jButton4) {
-			String Rno = this.jTextField.getText().trim();
-			String sql = "USE DB_Design;SELECT * FROM Relation WHERE Rno=?";
-			String[] paras = { Rno };
+			String Cno = this.jTextField1.getText().trim();
+			String Tno = this.jTextField2.getText().trim();
+			String Lno = this.jTextField3.getText().trim();
+			String Bno = this.jTextField4.getText().trim();
+			String sql = "USE DB_Design;SELECT * FROM Relation WHERE Cno=? AND Tno=? AND Lno=? AND Bno=?";
+			String[] paras = { Cno, Tno, Lno, Bno };
 			Relationship relationship1 = new Relationship();
 			try {
 				relationship1.queryRelationship(sql, paras);

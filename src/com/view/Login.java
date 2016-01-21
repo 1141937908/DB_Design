@@ -78,7 +78,7 @@ public class Login extends JFrame implements ActionListener{
         this.add(jPanel4);
 
         this.setLayout(new GridLayout(4,1));
-        this.setTitle("");
+        this.setTitle("教材征订与管理系统");
         this.setResizable(false);
         this.setSize(400,300);
         this.setVisible(true);
